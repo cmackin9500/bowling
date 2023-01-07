@@ -27,11 +27,28 @@ const addPlayer = (ev) => {
     h2.innerHTML = tmpNames;
 }
 
+// removes the initial layout after "Start game" button is pressed
 var clearPage = (ev) => {
     ev.preventDefault();
+    document.getElementById("pre").style.display = "none";
+    document.getElementById("startbtn").style.display = "none";
+    document.getElementById("btn").style.display = "none";
+    
+    h1 = document.querySelector('h1');
+    h1.innerHTML = "Welcome to the game!"
+    h2 = document.querySelector('h2');
+    h2.remove();
+
+    const buttons = document.querySelectorAll('startbtn');
+    for (const button of buttons) {
+        button.addEventListener('click',function() {
+            // Remove the button from the DOM
+            button.parentNode.removeChild(button);
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn').addEventListener('click',addPlayer);
-    document.getElementById('start').addEventListener('click',clearPage);
+    document.getElementById('startbtn').addEventListener('click',clearPage);
 });
