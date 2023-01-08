@@ -7,36 +7,26 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="fart">
+    <div id="initial">
         <form>
             <h1> Please enter player name </h1>
-            <div id="pre" class="info">
-                <input id="name" type="text">
-            </div>
-            <br>
+            <input id="name" type="text">
+            <br><br>
+            
+            <button id="btn"> Click to submit</button>  
 
-            <div id="pre">
-                <button id="btn"> Click to submit</button>  
-            </div>
-
-            <div id="pre" id="msg">
-                <pre></pre>
-            </div>
             <br>
 
             <script src="get_player_information.js"> </script>
             <h2></h2>
 
-            <div id="pre">
-                <button id="startbtn"> Start game</button> 
-            </div>
+            <button id="startbtn"> Start game</button> 
         </form>
     </div>
 
     <div id="game" style="display:none">
-        <h1>
-            hello world
-        </h1>
+        <button id="btn" onclick=main()> Bowl!</button>
+        <script src="player.js"> </script>
     </div>
 
 

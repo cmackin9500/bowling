@@ -31,9 +31,7 @@ const addPlayer = (ev) => {
 var clearPage = (ev) => {
     ev.preventDefault();
     // sets the display to none for the elements with the specified ID
-    document.getElementById("fart").style.display = "none";
-    //document.getElementById("startbtn").style.display = "none";
-    //document.getElementById("btn").style.display = "none";
+    document.getElementById("initial").style.display = "none";
     document.getElementById("game").style.display = "block";
     
     playerInformation = JSON.parse(localStorage.getItem('playerList'));

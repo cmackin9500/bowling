@@ -1,5 +1,3 @@
-const readline = require("readline");
-
 class createPlayer {
     constructor(name) {
         this.name = name;
@@ -32,36 +30,38 @@ function pointsFromThrow() {
     return Math.floor(Math.random() * 11);
 }
 
-let player = new scoreBoard('Peter');
+function main() {
+    let player = new scoreBoard('Peter');
 
-for(let i=0; i < 10; i++) {
+    for(let i=0; i < 10; i++) {
 
-    fT = pointsFromThrow();
-    sT = pointsFromThrow();
-    if ((fT+sT) > 10) {
-        sT = (10-fT);
+        fT = pointsFromThrow();
+        sT = pointsFromThrow();
+        if ((fT+sT) > 10) {
+            sT = (10-fT);
+        }
+
+        if (i > 0) {
+            if (player.score_board[i-1][0] === 10) {
+                player.score_board[i-1][0] += (fT+sT);
+                player.newScore = (fT+sT);
+            }
+            else if ((player.score_board[i-1][0]+player.score_board[i-1][1]) === 10) {
+                player.score_board[i-1][0] += fT;
+                player.newScore = fT;
+            }
+        }
+        let roundInfo = {
+            i: i,
+            fT: fT,
+            sT: sT
+        };
+
+        player.roundScore = roundInfo;
+        player.newScore = fT;
+        player.newScore = sT;
+        console.log(`Score after round ${i+1} is ${player.score}`);
     }
 
-    if (i > 0) {
-        if (player.score_board[i-1][0] === 10) {
-            player.score_board[i-1][0] += (fT+sT);
-            player.newScore = (fT+sT);
-        }
-        else if ((player.score_board[i-1][0]+player.score_board[i-1][1]) === 10) {
-            player.score_board[i-1][0] += fT;
-            player.newScore = fT;
-        }
-    }
-    let roundInfo = {
-        i: i,
-        fT: fT,
-        sT: sT
-    };
-
-    player.roundScore = roundInfo;
-    player.newScore = fT;
-    player.newScore = sT;
-    console.log(`Score after round ${i+1} is ${player.score}`);
+    console.log(`Final score for ${player.name} is ${player.score}.`)
 }
-
-console.log(`Final score for ${player.name} is ${player.score}.`)
