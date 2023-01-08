@@ -30,12 +30,20 @@ const addPlayer = (ev) => {
 // removes the initial layout after "Start game" button is pressed
 var clearPage = (ev) => {
     ev.preventDefault();
-    document.getElementById("pre").style.display = "none";
-    document.getElementById("startbtn").style.display = "none";
-    document.getElementById("btn").style.display = "none";
+    // sets the display to none for the elements with the specified ID
+    document.getElementById("fart").style.display = "none";
+    //document.getElementById("startbtn").style.display = "none";
+    //document.getElementById("btn").style.display = "none";
+    document.getElementById("game").style.display = "block";
     
+    playerInformation = JSON.parse(localStorage.getItem('playerList'));
+    let tmpNames = ""
+    for (const [index, info] of playerInformation.entries()) {
+        tmpNames += ("Welcome to the game, " + info.name + "!<br />");
+    }
+
     h1 = document.querySelector('h1');
-    h1.innerHTML = "Welcome to the game!"
+    h1.innerHTML = tmpNames;
     h2 = document.querySelector('h2');
     h2.remove();
 
