@@ -1,4 +1,5 @@
 let players = [];
+let playerName = "John"
 
 const addPlayer = (ev) => {
     ev.preventDefault();    // prevents the form to be submitted everytime there is a click
@@ -23,6 +24,7 @@ const addPlayer = (ev) => {
     let tmpNames = ""
     for (const [index, info] of playerInformation.entries()) {
         tmpNames += (`Player ${index+1} joined the game: ` + info.name + "<br />");
+        playerName = info.name;
     }
     h2.innerHTML = tmpNames;
 }
