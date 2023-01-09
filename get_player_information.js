@@ -46,14 +46,6 @@ var clearPage = (ev) => {
     h1.innerHTML = tmpNames;
     h2 = document.querySelector('h2');
     h2.remove();
-
-    const buttons = document.querySelectorAll('startbtn');
-    for (const button of buttons) {
-        button.addEventListener('click',function() {
-            // Remove the button from the DOM
-            button.parentNode.removeChild(button);
-        });
-    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

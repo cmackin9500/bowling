@@ -24,8 +24,8 @@ class createPlayer {
         else {
             this.turn = 1;
             this.i += 1;
-            console.log(`Score after round ${(this.i)+1} is ${this.score}`);
         }
+        console.log(`Score after round ${(this.i)+1} is ${this.score}`);
     }
 }
 
@@ -85,40 +85,9 @@ function throwBall(player) {
     player.newRound();
 
     console.log(`Round ${(player.i)+1} throw ${player.turn} score is ${s}`);
-}
-
-function main(playerName) {
-    let player = new scoreBoard(playerName);
-
-    for(let i=0; i < 10; i++) {
-
-        fT = pointsFromThrow();
-        sT = pointsFromThrow();
-        if ((fT+sT) > 10) {
-            sT = (10-fT);
-        }
-
-        if (i > 0) {
-            if (player.score_board[i-1][0] === 10) {
-                player.score_board[i-1][0] += (fT+sT);
-                player.newScore = (fT+sT);
-            }
-            else if ((player.score_board[i-1][0]+player.score_board[i-1][1]) === 10) {
-                player.score_board[i-1][0] += fT;
-                player.newScore = fT;
-            }
-        }
-        let roundInfo = {
-            i: i,
-            fT: fT,
-            sT: sT
-        };
-
-        player.roundScore = roundInfo;
-        player.newScore = fT;
-        player.newScore = sT;
-        console.log(`Score after round ${i+1} is ${player.score}`);
+    if (player.i === 9 && player.turn === 1) {
+        document.getElementById('game').addEventListener('click', () => {
+            document.getElementById("game").style.display = "none";
+        });
     }
-
-    console.log(`Final score for ${player.name} is ${player.score}.`)
 }
