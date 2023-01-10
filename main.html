@@ -20,15 +20,17 @@
             <script src="get_player_information.js"> </script>
             <h2></h2>
 
-            <button id="startbtn" onclick=logPlayer(playerName)> Start game</button> 
+            <script src="visual.js"> </script>
+            <button id="startbtn" onclick="logPlayer(playerName);createTable();"> Start game</button> 
         </form>
     </div>
 
     <div id="game" style="display:none">
-        <button id="btn" onclick=throwBall(player)> Bowl!</button>
+        <button id="btn" onclick="throwBall(player); updateValue(player);"> Bowl!</button>
         <script src="player.js"> </script>
-
-        <script src="visual.js"> </script>
+        
+        <br><br>
+        <table id="table"></table>
 
     </div>
 
