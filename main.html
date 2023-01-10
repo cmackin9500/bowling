@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<link rel="stylesheet" href="main.css">
 <body>
     <div id="initial">
         <form>
@@ -13,7 +14,7 @@
             <input id="name" type="text">
             <br><br>
             
-            <button id="btn"> Click to submit</button>  
+            <button id="btn" class="button"> Click to submit</button>  
 
             <br>
 
@@ -21,16 +22,19 @@
             <h2></h2>
 
             <script src="visual.js"> </script>
-            <button id="startbtn" onclick="logPlayer(playerName);createTable();"> Start game</button> 
+            <button id="startbtn" class="button" onclick="logPlayer(playerName);createTable();"> Start game</button> 
         </form>
     </div>
 
     <div id="game" style="display:none">
-        <button id="btn" onclick=throwBall(player)> Bowl!</button>
+        <button id="btn" class="button" onclick=throwBall(player)> Bowl!</button>
         <script src="player.js"> </script>
         
         <br><br>
-        <table id="table"></table>
+
+        <div class="table">
+            <table id="table"></table>
+        </div>
 
     </div>
 

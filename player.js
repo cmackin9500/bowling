@@ -25,7 +25,7 @@ class createPlayer {
         else {
             this.turn = 0;
             this.i += 1;
-            console.log(`Score after round ${(this.i)+1} is ${this.score}`);
+            console.log(`Score after round ${this.i} is ${this.score}`);
         }
     }
 }
@@ -60,6 +60,8 @@ function throwBall(player) {
         // if previous round was a spare or strike, we add first throw score
         if (player.i !== 0 && ((player.score_board[(player.i)-1][0]+player.score_board[(player.i)-1][1]) === 10)) {
             player.score_board[(player.i)-1][0] += s;
+            player.roundScore = s;
+            table.rows[1].cells[player.i].innerHTML = player.score;
         }
         // if strike
         if (s === 10) {
@@ -75,8 +77,10 @@ function throwBall(player) {
         }
 
         // if previous round was a strike, we also add second throw score
-        if (player.i !== 0 && player.score_board[(player.i)-1][0] === 10) {
+        if (player.i !== 0 && player.score_board[player.i-1][0] === 10) {
             player.score_board[(player.i)-1][0] += s;
+            table.rows[1].cells[player.i].innerHTML = player.score;
+            player.roundScore = s;
         }
     }
     player.roundScore = s;
