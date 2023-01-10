@@ -10,11 +10,12 @@ function createTable() {
         header.appendChild(textNode);
         headerRow.appendChild(header);
     }
+    headerRow.appendChild(document.createElement("th")).appendChild(document.createTextNode("Total"));
     table.appendChild(headerRow);
     
     let row = document.createElement('tr');
     
-    for (let i=0; i<=10; i++) {
+    for (let i=0; i<=11; i++) {
         let cell = document.createElement('td');
         let textNode = document.createTextNode(0);
 
@@ -32,8 +33,6 @@ function createTable() {
 }
 
 function updateValue(player) {
-    if (player.turn === 1) {
-        var table = document.getElementById('table');
-        table.rows[1].cells[(player.i)+1].innerHTML = player.score_board[player.i][0]+player.score_board[player.i][1];
-    }
+    var table = document.getElementById('table');
+    table.rows[1].cells[(player.i)+1].innerHTML = player.score_board[player.i][0]+player.score_board[player.i][1];
 }

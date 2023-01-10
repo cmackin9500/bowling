@@ -18,14 +18,15 @@ class createPlayer {
         this.score += pointsToAdd;
     }
     newRound() {
+        console.log(`Round ${(this.i)+1} throw ${this.turn+1} score is ${s}`);
         if (this.turn === 0) {
             this.turn = 1;
         }
         else {
-            this.turn = 1;
+            this.turn = 0;
             this.i += 1;
+            console.log(`Score after round ${(this.i)+1} is ${this.score}`);
         }
-        console.log(`Score after round ${(this.i)+1} is ${this.score}`);
     }
 }
 
@@ -33,11 +34,7 @@ class scoreBoard extends createPlayer {
     constructor(name) {
         super(name);
         this.score_board = new Array(10).fill(0).map(() => new Array(2).fill(0));
-    }
-    //set roundScore(roundInfo) {
-    //    this.score_board[roundInfo.i][0] = roundInfo.fT;
-    //    this.score_board[roundInfo.i][1] = roundInfo.sT;
-    //}   
+    } 
     set roundScore(s) {
         this.score_board[this.i][this.turn] = s;
         this.score += s;
@@ -55,12 +52,13 @@ function logPlayer(playerName) {
 
 function throwBall(player) {
     s = pointsFromThrow();
+    var table = document.getElementById('table');
 
     // for throw #1
     if (player.turn === 0) {
         
         // if previous round was a spare or strike, we add first throw score
-        if (player.i !== 0 && ((player.score_board[(player.i)-1][0]+player.score_board[(this.i)-1][1]) === 10)) {
+        if (player.i !== 0 && ((player.score_board[(player.i)-1][0]+player.score_board[(player.i)-1][1]) === 10)) {
             player.score_board[(player.i)-1][0] += s;
         }
         // if strike
@@ -82,9 +80,10 @@ function throwBall(player) {
         }
     }
     player.roundScore = s;
+    table.rows[1].cells[(player.i)+1].innerHTML = player.score_board[player.i][0]+player.score_board[player.i][1];
+    table.rows[1].cells[11].innerHTML = player.score;
     player.newRound();
 
-    console.log(`Round ${(player.i)+1} throw ${player.turn} score is ${s}`);
     if (player.i === 9 && player.turn === 1) {
         document.getElementById('game').addEventListener('click', () => {
             document.getElementById("game").style.display = "none";
