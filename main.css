@@ -1,5 +1,12 @@
+body {
+    font-family: "comic sans ms";
+    background-color: lightblue;
+    background-image: url("bowling.jpeg");
+    background-size: cover;
+}
+
 h1 {
-    color: green;
+    color: black;
 }
 
 table {
@@ -8,7 +15,27 @@ table {
 }
 
 button {
-    background-color: lightpink;
-    color: green;
-    border: black;
+    background-color: white;
+    font-family: "comic sans ms";
+    color: black;
+    border: 2px solid black;
+    cursor: pointer;
+    padding: 4px 10px;
+    font-size: 16px;
+}
+
+input {
+    width: 30;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2px solid black;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  input[type="text"]
+{
+    font-size:18px;
+    font-family: "comic sans ms";
 }
