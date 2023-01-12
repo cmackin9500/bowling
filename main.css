@@ -34,8 +34,7 @@ input {
     box-sizing: border-box;
   }
 
-  input[type="text"]
-{
+  input[type="text"] {
     font-size:18px;
     font-family: "comic sans ms";
 }
