@@ -1,5 +1,5 @@
-function main() {
-    const table = document.createElement("table");
+function createTable() {
+    const table = document.getElementById("table");
 
     // Create the title/header row
     const titleRow = document.createElement("tr");
@@ -38,6 +38,8 @@ function main() {
     const bowlerName = document.createElement("td");
     bowlerName.colSpan = 5;
     bowlerName.rowSpan = 2;
+    textNode = document.createTextNode(playerName);
+    bowlerName.appendChild(textNode);
 
     // Append the cells to their respective rows
     row1.appendChild(bowlerName);
@@ -64,9 +66,8 @@ function main() {
     table.appendChild(titleRow);
     table.appendChild(row1);
     table.appendChild(row2);
+    table.rows[1].cells[0].innerHTML = player.name;
 
     // Append the table to the document
     document.body.appendChild(table);
 }
-
-document.addEventListener('DOMContentLoaded', main);

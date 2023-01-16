@@ -1,5 +1,5 @@
 let players = [];
-let playerName = "John"
+let playerName = "John";
 
 const addPlayer = (ev) => {
     ev.preventDefault();    // prevents the form to be submitted everytime there is a click
