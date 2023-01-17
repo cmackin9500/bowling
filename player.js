@@ -64,12 +64,14 @@ function logPlayer(playerName) {
 }
 
 function throwBall(player) {
-    let s = pointsFromThrow();
+    //let s = pointsFromThrow();
+    let s = 10;
 
     if (player.round === 10) {
         let [lf,ls] = player.score_board[player.score_board.length-1];
         if((lf+ls) >= 10) {
-            console.log("heyo")
+            player.queue.push([player.round, 1, 0, 0]);
+            player.score_board.push([[s]]);
         }
     }
 
@@ -80,14 +82,11 @@ function throwBall(player) {
             // for strike
             if (s === 10) {
                 player.stack.push(1);
-                if(player.round !== 9)
+                if(player.round < 9)
                     player.turn += 1;
                 player.queue.push([player.round, player.turn, 2, 2]);
             }
             else {
-                //if (player.stack.length > 0 && player.stack[player.stack.length-1] === 1)
-                //    player.queue.push([player.round, player.turn, 0, 1]);
-                //else 
                 player.queue.push([player.round, player.turn, 0, 1]);
                 player.stack.push(0);
             }   
@@ -97,7 +96,10 @@ function throwBall(player) {
         else {
             player.stack.push(0);
             // for spare
-            if ((player.score_board[player.round][0]+s) > 10) {
+            if (player.round === 9 && player.score_board[player.round][0] === 10)
+                player.queue.push([player.round, player.turn, 1, 1]);
+
+            else if ((player.score_board[player.round][0]+s) > 10) {
                 s = (10-player.score_board[player.round][0]);
                 player.queue.push([player.round, player.turn, 1, 1]);
             }
@@ -107,7 +109,8 @@ function throwBall(player) {
     }
         
     // add score to score board
-    player.roundScore = s;
+    if(player.round !== 10)
+        player.roundScore = s;
     player.addThrowToScoreBoard(player.round,player.turn,s);
 
     console.log(`round ${player.round+1} throw ${player.turn}`);
@@ -125,6 +128,7 @@ function throwBall(player) {
         }
         else {
             // editing table for strike
+            console.log(type)
             if(type === 2) {
                 let [firstRound,fistTurn] = [player.queue[0][0],player.queue[0][1]];
                 let [secondRound,secondTurn] = [player.queue[1][0],player.queue[1][1]];
@@ -137,17 +141,12 @@ function throwBall(player) {
                 player.newScore = player.score_board[firstRound][fistTurn];
             }
             player.newScore = player.score_board[round][turn];
-            //if (display)
-            //if (player.turn === 1 || type > 0)
             if (turn === 1)
                 player.addTotalToScoreBoard(round,turn);
         }
     }
+    console.log(player.score)
     player.newRound(s);
-
-    //player.roundScore = s;
-    //player.addToScoreBoard(player.round,player.turn,s);
-    //player.newRound();
 
     /*
     if (player.round === 10 && player.turn === 0) {
