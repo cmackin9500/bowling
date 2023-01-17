@@ -14,13 +14,18 @@ function createTable() {
     titleRow.appendChild(BOWLERS);
 
     // add the round number
-    for(let i=0; i<10; i++) {
+    for(let i=0; i<9; i++) {
         const roundNumber = document.createElement("th");
         roundNumber.colSpan = 2;
         let textNode = document.createTextNode(i+1);
         roundNumber.appendChild(textNode);
         titleRow.appendChild(roundNumber);
     }
+    const roundNumber = document.createElement("th");
+    roundNumber.colSpan = 3;
+    let textTen = document.createTextNode(10);
+    roundNumber.appendChild(textTen);
+    titleRow.appendChild(roundNumber);
 
     // add table header for "TOTAL"
     const scoreTitle = document.createElement("th");
@@ -43,7 +48,7 @@ function createTable() {
 
     // Append the cells to their respective rows
     row1.appendChild(bowlerName);
-    for(let i=0; i<20; i++) {
+    for(let i=0; i<21; i++) {
         const turnThrow = document.createElement("td");
         turnThrow.colSpan = 1;
         row1.appendChild(turnThrow);
@@ -56,11 +61,14 @@ function createTable() {
     row1.appendChild(bowlerScore);
 
     // Append the cells to their respective rows
-    for(let i=0; i<10; i++) {
+    for(let i=0; i<9; i++) {
         const roundThrow = document.createElement("td");
         roundThrow.colSpan = 2;
         row2.appendChild(roundThrow);
     }
+    const roundThrow = document.createElement("td");
+    roundThrow.colSpan = 3;
+    row2.appendChild(roundThrow);
 
     // Append the rows to the table
     table.appendChild(titleRow);

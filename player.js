@@ -45,14 +45,12 @@ class scoreBoard extends createPlayer {
     addThrowToScoreBoard(r,t,s) {
         // r = this.round, t = this.turn, s = s
         table.rows[1].cells[1+2*r+t].innerHTML = s;
-        //table.rows[2].cells[r].innerHTML = this.score;
-        //table.rows[1].cells[21].innerHTML = this.score;
     }
 
     addTotalToScoreBoard(r,t) {
         // r = this.round, t = this.turn, s = s
         table.rows[2].cells[r].innerHTML = this.score;
-        table.rows[1].cells[21].innerHTML = this.score;
+        table.rows[1].cells[22].innerHTML = this.score;
     }
 }
 
@@ -68,8 +66,11 @@ function logPlayer(playerName) {
 function throwBall(player) {
     let s = pointsFromThrow();
 
-    if (player.round === 9) {
-
+    if (player.round === 10) {
+        let [lf,ls] = player.score_board[player.score_board.length-1];
+        if((lf+ls) >= 10) {
+            console.log("heyo")
+        }
     }
 
     else {
@@ -78,15 +79,17 @@ function throwBall(player) {
             
             // for strike
             if (s === 10) {
-                player.stack.push(1)
+                player.stack.push(1);
+                if(player.round !== 9)
+                    player.turn += 1;
                 player.queue.push([player.round, player.turn, 2, 2]);
             }
             else {
+                //if (player.stack.length > 0 && player.stack[player.stack.length-1] === 1)
+                //    player.queue.push([player.round, player.turn, 0, 1]);
+                //else 
+                player.queue.push([player.round, player.turn, 0, 1]);
                 player.stack.push(0);
-                if (player.stack[player.stack.length-1] === "s")
-                    player.queue.push([player.round, player.turn, 0, 1]);
-                else 
-                    player.queue.push([player.round, player.turn, 0, 0]);
             }   
         }
 
@@ -107,15 +110,24 @@ function throwBall(player) {
     player.roundScore = s;
     player.addThrowToScoreBoard(player.round,player.turn,s);
 
-    for (let i=0; i<player.queue.length; i++) {
-        var [round,turn,type,c] = player.queue.shift();
-        if (c > 0)
-            player.queue.push([round,turn,type,c-1]);
+    console.log(`round ${player.round+1} throw ${player.turn}`);
+    let display = false;
+    if(player.queue[0][3] === 0 && !(player.round === 0 && player.turn === 0)) 
+        display = true;
+
+    console.log(`queue lenght is ${player.queue.length}`)
+    for (let i=0,len=player.queue.length; i<len; i++) {
+        console.log(player.queue[i])
+        let [round,turn,type,c] = player.queue.shift();
+        if (c !== 0) {
+            var newC = c-1;
+            player.queue.push([round,turn,type,newC]);
+        }
         else {
             // editing table for strike
             if(type === 2) {
                 let [firstRound,fistTurn] = [player.queue[0][0],player.queue[0][1]];
-                let [secondRound,secondTurn] = [player.queue[1][0],player,queue[1][1]];
+                let [secondRound,secondTurn] = [player.queue[1][0],player.queue[1][1]];
                 player.newScore = player.score_board[firstRound][fistTurn];
                 player.newScore = player.score_board[secondRound][secondTurn];
             }
@@ -125,8 +137,10 @@ function throwBall(player) {
                 player.newScore = player.score_board[firstRound][fistTurn];
             }
             player.newScore = player.score_board[round][turn];
-            player.addTotalToScoreBoard(round,turn);
-
+            //if (display)
+            //if (player.turn === 1 || type > 0)
+            if (turn === 1)
+                player.addTotalToScoreBoard(round,turn);
         }
     }
     player.newRound(s);
@@ -135,9 +149,11 @@ function throwBall(player) {
     //player.addToScoreBoard(player.round,player.turn,s);
     //player.newRound();
 
+    /*
     if (player.round === 10 && player.turn === 0) {
         document.getElementById('game').addEventListener('click', () => {
             document.getElementById("game").style.display = "none";
         });
     }
+    */
 }
