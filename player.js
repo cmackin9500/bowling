@@ -70,8 +70,8 @@ function throwBall(player) {
     if (player.round === 10) {
         let [lf,ls] = player.score_board[player.score_board.length-1];
         if((lf+ls) >= 10) {
-            player.queue.push([player.round, 1, 0, 0]);
-            player.score_board.push([[s]]);
+            player.queue.push([player.round, player.turn, 0, 0]);
+            player.score_board.push([s]);
         }
     }
 
@@ -95,10 +95,10 @@ function throwBall(player) {
         // turn 2
         else {
             player.stack.push(0);
-            // for spare
+            // for last round and a strike
             if (player.round === 9 && player.score_board[player.round][0] === 10)
                 player.queue.push([player.round, player.turn, 1, 1]);
-
+            // for spare
             else if ((player.score_board[player.round][0]+s) > 10) {
                 s = (10-player.score_board[player.round][0]);
                 player.queue.push([player.round, player.turn, 1, 1]);
@@ -114,11 +114,7 @@ function throwBall(player) {
     player.addThrowToScoreBoard(player.round,player.turn,s);
 
     console.log(`round ${player.round+1} throw ${player.turn}`);
-    let display = false;
-    if(player.queue[0][3] === 0 && !(player.round === 0 && player.turn === 0)) 
-        display = true;
 
-    console.log(`queue lenght is ${player.queue.length}`)
     for (let i=0,len=player.queue.length; i<len; i++) {
         console.log(player.queue[i])
         let [round,turn,type,c] = player.queue.shift();
@@ -128,24 +124,33 @@ function throwBall(player) {
         }
         else {
             // editing table for strike
-            console.log(type)
             if(type === 2) {
+                console.log(player.queue)
                 let [firstRound,fistTurn] = [player.queue[0][0],player.queue[0][1]];
                 let [secondRound,secondTurn] = [player.queue[1][0],player.queue[1][1]];
+                console.log(player.score_board[firstRound][fistTurn])
+                console.log(player.score_board[secondRound][secondTurn])
                 player.newScore = player.score_board[firstRound][fistTurn];
                 player.newScore = player.score_board[secondRound][secondTurn];
             }
             // editing table for spare
             else if(type === 1) {
                 let [firstRound,fistTurn] = [player.queue[0][0],player.queue[0][1]];
+                console.log(player.score_board[firstRound][fistTurn])
                 player.newScore = player.score_board[firstRound][fistTurn];
             }
-            player.newScore = player.score_board[round][turn];
-            if (turn === 1)
+            if(player.round !== 10)
+                player.newScore = player.score_board[round][turn];
+            else
+                player.newScore = s;
+
+            if (turn === 1 || player.round === 10) {
+                console.log(player.score);
                 player.addTotalToScoreBoard(round,turn);
+            }
+
         }
     }
-    console.log(player.score)
     player.newRound(s);
 
     /*
