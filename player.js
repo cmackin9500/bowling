@@ -35,7 +35,7 @@ class createPlayer {
 class scoreBoard extends createPlayer {
     constructor(name) {
         super(name);
-        this.score_board = new Array(10).fill(0).map(() => new Array(2).fill(0));
+        this.score_board = new Array(10).fill(0).map(() => new Array(2).fill(null));
     } 
     set roundScore(s) {
         this.score_board[this.round][this.turn] = s;
@@ -44,7 +44,11 @@ class scoreBoard extends createPlayer {
 
     addThrowToScoreBoard(r,t,s) {
         // r = this.round, t = this.turn, s = s
-        table.rows[1].cells[1+2*r+t].innerHTML = s;
+        let char;
+        if(t === 1 && s === 10 && this.score_board[r][0] === null) char = 'X';
+        else if (t === 1 && this.score_board[r][0]+this.score_board[r][1]===10) char = '/';
+        else char = s;
+        table.rows[1].cells[1+2*r+t].innerHTML = char;
     }
 
     addTotalToScoreBoard(r,t) {
@@ -70,7 +74,6 @@ function logPlayer(playerName) {
 
 function throwBall(player) {
     let s = pointsFromThrow();
-    //let s = 10;
 
     if (player.round === 10) {
         let [lf,ls] = player.score_board[player.score_board.length-1];
@@ -108,12 +111,13 @@ function throwBall(player) {
             if (player.round === 9 && player.score_board[player.round][0] === 10)
                 player.queue.push([player.round, player.turn, 0, 1]);
             // for spare
-            else if ((player.score_board[player.round][0]+s) > 10) {
+            else if ((player.score_board[player.round][0]+s) >= 10 && player.round !== 9) {
                 s = (10-player.score_board[player.round][0]);
                 player.queue.push([player.round, player.turn, 1, 1]);
             }
-            else
+            else {
                 player.queue.push([player.round, player.turn, 0, 0]);
+            }
         }
     }
         
@@ -125,7 +129,6 @@ function throwBall(player) {
     console.log(`round ${player.round+1} throw ${player.turn}`);
 
     for (let i=0,len=player.queue.length; i<len; i++) {
-        console.log(player.queue[i])
         let [round,turn,type,c] = player.queue.shift();
         if (c !== 0) {
             var newC = c-1;
@@ -162,11 +165,11 @@ function throwBall(player) {
     }
     player.newRound(s);
 
-    /*
-    if (player.round === 10 && player.turn === 0) {
+    if ((player.round === 10 && player.turn === 0 && player.score_board[9][0]+player.score_board[9][1]<10)
+         || player.round === 10 && player.turn === 1) {
         document.getElementById('game').addEventListener('click', () => {
             document.getElementById("game").style.display = "none";
         });
     }
-    */
+    
 }
