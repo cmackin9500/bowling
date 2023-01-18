@@ -49,7 +49,12 @@ class scoreBoard extends createPlayer {
 
     addTotalToScoreBoard(r,t) {
         // r = this.round, t = this.turn, s = s
-        table.rows[2].cells[r].innerHTML = this.score;
+        if (r !== 10) {
+            table.rows[2].cells[r].innerHTML = this.score;
+        }
+        else {
+            table.rows[2].cells[r-1].innerHTML = this.score;
+        }
         table.rows[1].cells[22].innerHTML = this.score;
     }
 }
@@ -64,8 +69,8 @@ function logPlayer(playerName) {
 }
 
 function throwBall(player) {
-    //let s = pointsFromThrow();
-    let s = 10;
+    let s = pointsFromThrow();
+    //let s = 10;
 
     if (player.round === 10) {
         let [lf,ls] = player.score_board[player.score_board.length-1];
@@ -82,9 +87,13 @@ function throwBall(player) {
             // for strike
             if (s === 10) {
                 player.stack.push(1);
-                if(player.round < 9)
+                if(player.round < 9) {
                     player.turn += 1;
-                player.queue.push([player.round, player.turn, 2, 2]);
+                    player.queue.push([player.round, player.turn, 2, 2]);
+                }
+                else {
+                    player.queue.push([player.round, player.turn, 0, 2]);
+                }
             }
             else {
                 player.queue.push([player.round, player.turn, 0, 1]);
@@ -97,7 +106,7 @@ function throwBall(player) {
             player.stack.push(0);
             // for last round and a strike
             if (player.round === 9 && player.score_board[player.round][0] === 10)
-                player.queue.push([player.round, player.turn, 1, 1]);
+                player.queue.push([player.round, player.turn, 0, 1]);
             // for spare
             else if ((player.score_board[player.round][0]+s) > 10) {
                 s = (10-player.score_board[player.round][0]);
